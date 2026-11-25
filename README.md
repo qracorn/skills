@@ -1,48 +1,53 @@
-# QRAcorn print proof skill
+# Check poster QR links with QRAcorn
 
-`check-poster` compares QR codes on one poster or a batch of PNG and JPEG proofs with the intended public URLs and their positions. It runs locally with Node.js 22 or later. The decoder, its licenses, demo posters and sample manifest are included. After copying the repository, the checker runs offline without installing npm packages.
+Copy this request into an AI assistant that can access local files.
 
-## Install the skill
-
-Copy the whole `skills/check-poster` folder into the skills directory your agent reads. Keep the scripts, WASM and assets together. For a project-scoped installation with Codex, run these commands from the target project, substituting the path to your private checkout.
-
-```sh
-mkdir -p .agents/skills
-cp -R "/path/to/private-skills/skills/check-poster" .agents/skills/
+```text
+Use the QRAcorn skill at https://raw.githubusercontent.com/qracorn/skills/main/skills/check-poster/SKILL.md to check my poster QR links against my approved list, first confirming that you can run Node.js 22+ locally and read the posters and list, asking me for anything missing, and offering the browser checker if local execution is unavailable.
 ```
 
-For Claude Code, use `.claude/skills/` in the project. Other clients that support Agent Skills can use their documented skills directory and need a local file executor with Node.js on PATH. Start a new session and ask “Run the bundled poster batch example.” You can also run the commands below directly from the private checkout.
+Attach the final PNG or JPEG posters. Say where each link belongs, for example “registration on the left, schedule on the right,” and include the exact approved URLs. For a first try, ask to check the two bundled sample posters. The checker reads the images locally and reports differences without opening QR destinations. A chat’s own attachment and data settings still apply.
 
-## Try both workflows
+You can also choose your images directly in the [single poster checker](https://qracorn.com/poster-qr-code-checker) or [batch poster checker](https://qracorn.com/batch-poster-qr-code-checker).
+
+## Run the CLI
+
+With Node.js 22 or later installed, clone once and run the included checker. It works offline after download and needs no npm install.
 
 ```sh
-cd skills/check-poster
-node scripts/check-poster.mjs assets/sample-poster.png expected-sample.json
+git clone https://github.com/qracorn/skills.git qracorn-skills
+cd qracorn-skills/skills/check-poster
 node scripts/check-poster.mjs --batch examples/poster-batch.json
 ```
 
-The batch returns two posters. Open Studio Weekend has its registration and schedule codes swapped. Jazz Night matches both approved links. The demonstration exits with status 2 and prints the JSON report on stdout. Status 0 means every poster passed. Status 1 means the batch itself could not run. In single-poster mode, inspect the returned rows for mismatches.
+The sample reports two posters. Open Studio Weekend has its registration and schedule links swapped. Jazz Night matches both approved links. The command exits with **2** because it found a problem. To try one image or save a batch report, run these from the same directory.
 
-## 日本語のサンプルを試す
-
-`skills/check-poster` フォルダで `node scripts/check-poster.mjs --batch examples/ja/poster-batch.json` を実行します。「陶芸工房の開放日」は体験予約と当日の予定のリンクが左右逆です。「町家寄席」はチケット予約と会場案内の両方が一致します。結果は合計2件、一致1件、要確認1件です。
-
-## Check a print batch
-
-Use `examples/poster-batch.json` as a template. Save the UTF-8 file beside the selected proofs. A poster in a subfolder can use a path such as `images/lobby.png`. Preserve the complete intended URLs, including query strings and fragments. Use the position visible on the poster, or `any` when placement is unimportant.
-
-```json
-{
-  "version": 1,
-  "posters": [
-    {
-      "image": "lobby.png",
-      "expected": [{ "position": "left", "url": "https://example.org/register" }]
-    }
-  ]
-}
+```sh
+node scripts/check-poster.mjs assets/sample-poster.png expected-sample.json
+node scripts/check-poster.mjs --batch "/path/to/poster-batch.json" > poster-report.json
 ```
 
-From the skill directory, run `node scripts/check-poster.mjs --batch "/path/to/print-proofs/poster-batch.json"`. A proof is marked `passed` when every required code matches. A code that is missing, unexpected, ambiguous or pointed at the wrong URL produces `issues`. A missing, unreadable or unsupported input file produces `input_error`. The report preserves manifest order and includes a position and URL comparison for each processed code. Each expected destination's URL is part of the report. Unexpected content is masked according to the supplied public links.
+日本語の「陶芸工房の開放日」と「町家寄席」は `examples/ja/poster-batch.json` で試せます。繁中「大稻埕手沖茶體驗」與「河岸爵士之夜」的核對清單在 `examples/zh-tw/poster-batch.json`。
 
-The checker handles up to 100 proofs per manifest, 1 MiB of UTF-8 JSON, 12 MiB and 16 megapixels per image, and up to 20 intended public links per proof. Use still PNG or JPEG files and split any proof with 20 or more decoded codes into smaller sections. QR destinations are never opened.
+## Use your approved links
+
+Copy the [two-poster sample manifest](skills/check-poster/examples/poster-batch.json) beside your images. Each image path is relative to the manifest. Use `left`, `right`, `top`, `bottom` or `any` for the position. Enter complete public HTTP(S) URLs, including their query parameters and fragments.
+
+The batch returns JSON on stdout in manifest order. **0** means all passed. **2** means the report contains mismatches, unreadable items or input errors. **1** means the batch could not run and the error is on stderr. In single-poster mode, check the individual row statuses when the program returns 0. Each batch accepts up to 100 posters, each image up to 12 MiB and 16 megapixels. Split images that reach the 20-code detection limit.
+
+## Install the agent skill
+
+Copy the whole [check-poster](skills/check-poster) folder into the skills directory for your agent. For a project-scoped Codex skill, run these commands from your target project, using the checkout path from the CLI step.
+
+```sh
+mkdir -p .agents/skills
+cp -R /path/to/qracorn-skills/skills/check-poster .agents/skills/
+```
+
+Start a new session and ask to check the two bundled examples. Your agent needs a local file executor and Node.js 22+. If either is unavailable, use the browser checker. [Skill instructions](skills/check-poster/SKILL.md)
+
+## Source and license
+
+The [CLI source](cli/src) includes the command-line entry, image handling and QR comparison code. To rebuild the bundled executable and decoder, run `npm ci --prefix cli` followed by `npm run build --prefix cli` from the repository root. Rebuilding requires the two pinned public dependencies.
+
+QRAcorn’s original code, skill instructions and examples are covered by the [MIT License](LICENSE). The bundled reader and its dependencies retain their [third-party licenses and notices](skills/check-poster/licenses).
