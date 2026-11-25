@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "posters": [
+    {
+      "image": "poster-check.png",
+      "expected": [
+        { "position": "left", "url": "https://example.org/register" },
+        { "position": "right", "url": "https://example.org/schedule" }
+      ]
+    },
+    {
+      "image": "jazz-night.png",
+      "expected": [
+        { "position": "left", "url": "https://example.org/tickets" },
+        { "position": "right", "url": "https://example.org/venue" }
+      ]
+    }
+  ]
+}
