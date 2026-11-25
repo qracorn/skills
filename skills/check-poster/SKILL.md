@@ -9,6 +9,8 @@ Use the supplied public event or marketing posters and their intended URLs. Run 
 
 ## Check one poster
 
+For a Japanese-language demonstration, use `examples/ja/togei-kobo.png` with `expected-sample.json` for a single proof, or run `node scripts/check-poster.mjs --batch examples/ja/poster-batch.json` for the two-poster example. The Japanese proofs are 「陶芸工房の開放日」 and 「町家寄席」. Use the user's requested sample language when specified.
+
 1. Collect the poster and the intended position and complete public HTTP(S) URL for each QR code. Allowed positions are `left`, `right`, `top`, `bottom`, and `any`. Preserve URL parameters and fragments exactly. For a PDF, request a PNG or JPEG export of the relevant page.
 2. Write the expectations to a temporary UTF-8 JSON file as an array, following `expected-sample.json`. Run `node scripts/check-poster.mjs "path/to/poster.png" "path/to/expected.json"`. The sample command is `node scripts/check-poster.mjs assets/sample-poster.png expected-sample.json`.
 3. Read the JSON on stdout. Report each position, intended URL, decoded value and status in the user's language. Explain any unread or ambiguous position and suggest a sharper proof or a crop with its own expectations.

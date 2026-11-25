@@ -23,6 +23,10 @@ node scripts/check-poster.mjs --batch examples/poster-batch.json
 
 The batch returns two posters. Open Studio Weekend has its registration and schedule codes swapped. Jazz Night matches both approved links. The demonstration exits with status 2 and prints the JSON report on stdout. Status 0 means every poster passed. Status 1 means the batch itself could not run. In single-poster mode, inspect the returned rows for mismatches.
 
+## 日本語のサンプルを試す
+
+`skills/check-poster` フォルダで `node scripts/check-poster.mjs --batch examples/ja/poster-batch.json` を実行します。「陶芸工房の開放日」は体験予約と当日の予定のリンクが左右逆です。「町家寄席」はチケット予約と会場案内の両方が一致します。結果は合計2件、一致1件、要確認1件です。
+
 ## Check a print batch
 
 Use `examples/poster-batch.json` as a template. Save the UTF-8 file beside the selected proofs. A poster in a subfolder can use a path such as `images/lobby.png`. Preserve the complete intended URLs, including query strings and fragments. Use the position visible on the poster, or `any` when placement is unimportant.
