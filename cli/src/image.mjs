@@ -1,7 +1,7 @@
 // Read dimensions before passing the compressed bytes to the native decoder.
 const pngSignature = Buffer.from('89504e470d0a1a0a', 'hex');
 
-function exifOrientation(tiff) {
+export function exifOrientation(tiff) {
   if (tiff.length < 8) throw new Error('Invalid EXIF header');
   const little = tiff.toString('ascii', 0, 2) === 'II';
   const u16 = offset => little ? tiff.readUInt16LE(offset) : tiff.readUInt16BE(offset);

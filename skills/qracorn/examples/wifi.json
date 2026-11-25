@@ -1,0 +1,6 @@
+{
+  "ssid": "QRAcorn Demo Guest",
+  "security": "WPA",
+  "password": "fictional-demo-only",
+  "hidden": false
+}

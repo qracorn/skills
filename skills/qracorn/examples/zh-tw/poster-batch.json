@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "posters": [
+    {
+      "image": "tea-workshop.png",
+      "expected": [
+        {
+          "position": "left",
+          "url": "https://example.org/register"
+        },
+        {
+          "position": "right",
+          "url": "https://example.org/schedule"
+        }
+      ]
+    },
+    {
+      "image": "riverside-jazz.png",
+      "expected": [
+        {
+          "position": "left",
+          "url": "https://example.org/tickets"
+        },
+        {
+          "position": "right",
+          "url": "https://example.org/venue"
+        }
+      ]
+    }
+  ]
+}

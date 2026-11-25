@@ -118,6 +118,27 @@ function webLink(value) {
     return null;
   }
 }
+var escapeWifi = (s) => s.replace(/[\\;,":]/g, "\\$&");
+function wifiPayload(ssid, security, password, hidden) {
+  return "WIFI:T:" + security + ";S:" + escapeWifi(ssid) + ";" + (security === "nopass" ? "" : "P:" + escapeWifi(password) + ";") + (hidden ? "H:true;" : "") + ";";
+}
+function wifiFields(value) {
+  if (!value.startsWith("WIFI:")) return null;
+  const fields = /* @__PURE__ */ Object.create(null);
+  let current = "", escaped = false;
+  for (const char of value.slice(5) + ";") {
+    if (escaped) {
+      current += char;
+      escaped = false;
+    } else if (char === "\\") escaped = true;
+    else if (char === ";") {
+      const colon = current.indexOf(":");
+      if (colon > 0) fields[current.slice(0, colon)] = current.slice(colon + 1);
+      current = "";
+    } else current += char;
+  }
+  return fields.S !== void 0 ? fields : null;
+}
 
 // poster-batch.ts
 var batchLimits = { maxPosters: 100, manifestBytes: 1024 * 1024 };
@@ -191,14 +212,34 @@ function summarizeBatch(posters) {
   }
   return { version: 1, summary, posters };
 }
+
+// generate.ts
+async function generateStaticQr(content) {
+  const { default: qr } = await import("qrcode");
+  const options = {
+    margin: 4,
+    width: 896,
+    errorCorrectionLevel: "M",
+    color: { dark: "#000000", light: "#ffffff" }
+  };
+  const [png, svg] = await Promise.all([
+    qr.toDataURL(content, options),
+    qr.toString(content, { ...options, type: "svg" })
+  ]);
+  return { png, svg };
+}
 export {
   batchLimits,
   checkPoster,
   completedPoster,
   createQrReader,
+  generateStaticQr,
   manifestPosters,
   safeReport,
   summarizeBatch,
   validExpectations,
-  validImagePath
+  validImagePath,
+  webLink,
+  wifiFields,
+  wifiPayload
 };

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "posters": [
+    {
+      "image": "togei-kobo.png",
+      "expected": [
+        { "position": "left", "url": "https://example.org/register" },
+        { "position": "right", "url": "https://example.org/schedule" }
+      ]
+    },
+    {
+      "image": "machiya-yose.png",
+      "expected": [
+        { "position": "left", "url": "https://example.org/tickets" },
+        { "position": "right", "url": "https://example.org/venue" }
+      ]
+    }
+  ]
+}

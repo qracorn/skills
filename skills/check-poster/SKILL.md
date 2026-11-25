@@ -5,6 +5,8 @@ description: Check QR codes on a PNG or JPEG poster or preflight a batch of prin
 
 # Check poster proofs
 
+This is the compatible poster-only Skill. For general QR reading, URL/text/Wi-Fi generation and checking through one CLI, use the [QRAcorn Skill](https://raw.githubusercontent.com/qracorn/skills/main/skills/qracorn/SKILL.md). Existing commands below remain supported.
+
 First confirm local file execution is available, check `node --version` for Node.js 22 or later, and verify that the poster files and the user's approved positions and URLs are available. Ask for missing inputs. If the local runtime is unavailable, link the [browser checker](https://qracorn.com/batch-poster-qr-code-checker) and leave runtime installation to the user. If only this instruction file is available, the complete skill and checker can be obtained from the [public repository](https://github.com/qracorn/skills).
 
 Use the supplied public event or marketing posters and their intended URLs. Run the commands from the directory containing this SKILL.md, or use absolute paths to the bundled script and the user's files. Pass paths as separate arguments. Only use the examples when the user requests a demonstration.

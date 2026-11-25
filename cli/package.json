@@ -1,16 +1,17 @@
 {
-  "name": "qracorn-check-poster",
-  "version": "1.0.0",
+  "name": "qracorn",
+  "version": "0.3.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
-  "scripts": {
-    "build": "node build.mjs"
-  },
-  "engines": {
-    "node": ">=22"
-  },
+  "bin": {"qracorn": "bin/qracorn.mjs"},
+  "files": ["bin", "src", "build.mjs", "LICENSE", "licenses"],
+  "scripts": {"build": "node build.mjs"},
+  "engines": {"node": ">=22"},
   "devDependencies": {
+    "icodec": "0.6.0",
     "esbuild": "0.28.2",
+    "qrcode": "1.5.4",
     "zxing-wasm": "3.1.7"
   }
 }
