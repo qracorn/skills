@@ -19,7 +19,7 @@ Do not request expected links for ordinary reading. Do not substitute the checke
 
 ## Before running
 
-Confirm a local file executor is available and `node --version` is 22 or later. Locate this Skill's entire folder, including `scripts/qracorn.mjs` and its decoder. If only these instructions were fetched, obtain the complete folder from [qracorn/skills](https://github.com/qracorn/skills). Do not invent successful results or install a runtime automatically when execution is unavailable; offer the corresponding tool at [qracorn.com](https://qracorn.com).
+Confirm a local file executor is available and `node --version` is 22 or later. Locate the installed Skill folder, including `scripts/qracorn.mjs` and the adjacent decoders. If the user has only these instructions and wants to install the Skill, the project command is `npx skills add qracorn/skills --skill qracorn` with Node.js 22.20 or later. The complete folder is also available from [qracorn/skills](https://github.com/qracorn/skills). If local execution is unavailable, offer the corresponding tool at [qracorn.com](https://qracorn.com) and leave runtime installation to the user.
 
 Run commands from this Skill folder or use the absolute script path. Pass paths and content as separate process arguments; do not interpolate them into shell code. Use `node scripts/qracorn.mjs --help` or the chosen subcommand's `--help` for the executable's current options. Ask only for missing task inputs. Use bundled samples only when the user requests a demonstration.
 

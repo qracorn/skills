@@ -10,6 +10,18 @@ Then describe your task: “Read this screenshot,” “Create a QR code for thi
 
 Prefer the browser? [Read](https://qracorn.com) · [Generate](https://qracorn.com/qr-code-generator) · [Wi-Fi](https://qracorn.com/wifi-qr-code-generator) · [Check a poster](https://qracorn.com/poster-qr-code-checker) · [Check a batch](https://qracorn.com/batch-poster-qr-code-checker)
 
+## Install the Skill
+
+To install with skills.sh, run the following command from your project with Node.js 22.20 or later. Choose your AI agent when prompted.
+
+```sh
+npx skills add qracorn/skills --skill qracorn
+```
+
+Start a new agent session and ask “Use QRAcorn to check the two sample posters.” One poster has its links swapped and one passes. The installation includes the CLI, decoders and sample images. With Codex, you can also verify the installation from the project root with `node .agents/skills/qracorn/scripts/qracorn.mjs --version`. [skills.sh installer documentation](https://www.skills.sh/docs/cli)
+
+For the dedicated poster checker, use `--skill check-poster` in the same command. To install from a local copy, place the complete `skills/qracorn/` folder in your agent’s project skills directory. The installed QR tools run with Node.js 22 or later. [Skill instructions](skills/qracorn/SKILL.md)
+
 ## One CLI, four subcommands
 
 Download once with Node.js 22 or later available. The bundled CLI runs offline and needs no npm install.
@@ -44,17 +56,6 @@ node cli/bin/qracorn.mjs check --batch skills/qracorn/examples/poster-batch.json
 The two-poster demonstration reports one correct proof and one with swapped links. Exit **2** means the check finished with findings. Use `examples/ja/poster-batch.json` or `examples/zh-tw/poster-batch.json` under the same Skill folder for Japanese and Traditional Chinese posters. Expected links, positions and input limits are documented in the [check reference](skills/qracorn/references/checks.md).
 
 Checking verifies encoded values and their positions in the supplied image. It does not visit links or guarantee final print legibility. Runtime/input errors use exit **1**, and completed commands without findings use **0**. The legacy `skills/check-poster/` folder keeps its previous CLI and raw instruction URL; its single-poster exit behavior is described in that Skill.
-
-## Install the Skill
-
-Copy the complete `skills/qracorn/` folder into your agent's skills directory. For a project-scoped Codex installation, run this from your target project:
-
-```sh
-mkdir -p .agents/skills
-cp -R /path/to/qracorn-skills/skills/qracorn .agents/skills/
-```
-
-Start a new session. The one Skill selects `read`, `generate`, `wifi` or `check` from your request. It needs local file execution and Node.js 22+. [Read the instructions](skills/qracorn/SKILL.md).
 
 ## Source and license
 
